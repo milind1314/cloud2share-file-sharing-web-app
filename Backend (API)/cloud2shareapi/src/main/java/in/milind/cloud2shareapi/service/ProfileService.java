@@ -13,8 +13,12 @@ import java.time.Instant;
 public class ProfileService {
     private final ProfileRepository profileRepo;
 
-    public ProfileDTO createProfile(ProfileDTO profileDTO)
-    {
+    public ProfileDTO createProfile(ProfileDTO profileDTO) {
+
+        if (profileRepo.existsByClerkId(profileDTO.getClerkId())) {
+            return updateProfile(profileDTO);
+        }
+        
         ProfileDocument profile = ProfileDocument.builder()
                 .clerkId(profileDTO.getClerkId())
                 .email(profileDTO.getEmail())
@@ -37,5 +41,56 @@ public class ProfileService {
                 .credits(profile.getCredits())
                 .createdAt(profile.getCreatedAt())
                 .build();
+    }
+
+    public ProfileDTO updateProfile(ProfileDTO profileDTO) {
+
+        ProfileDocument existingProfile = profileRepo.findByClerkId(profileDTO.getClerkId());
+
+        if (existingProfile != null) {
+            //update the fields if provided
+            if (profileDTO.getEmail() != null && !profileDTO.getEmail().isEmpty()) {
+                existingProfile.setEmail(profileDTO.getEmail());
+            }
+
+            if (profileDTO.getFirstName() != null && !profileDTO.getFirstName().isEmpty()) {
+                existingProfile.setFirstName(profileDTO.getFirstName());
+            }
+
+            if (profileDTO.getLastName() != null && !profileDTO.getLastName().isEmpty()) {
+                existingProfile.setLastName(profileDTO.getLastName());
+            }
+
+            if (profileDTO.getPhotoUrl() != null && !profileDTO.getPhotoUrl().isEmpty()) {
+                existingProfile.setPhotoUrl(profileDTO.getPhotoUrl());
+            }
+
+            profileRepo.save(existingProfile);
+
+            return ProfileDTO.builder()
+                    .id(existingProfile.getId())
+                    .email(existingProfile.getEmail())
+                    .clerkId(existingProfile.getClerkId())
+                    .firstName(existingProfile.getFirstName())
+                    .lastName(existingProfile.getLastName())
+                    .credits(existingProfile.getCredits())
+                    .createdAt(existingProfile.getCreatedAt())
+                    .photoUrl(existingProfile.getPhotoUrl())
+                    .build();
+
+        }
+        return null;
+    }
+
+    public Boolean existsByClerkId(String clerkId) {
+        return profileRepo.existsByClerkId(clerkId);
+    }
+
+    public void deleteProfile(String clerkId){
+        ProfileDocument existingProfile = profileRepo.findByClerkId(clerkId);
+
+        if (existingProfile != null) {
+            profileRepo.delete(existingProfile);
+        }
     }
 }
