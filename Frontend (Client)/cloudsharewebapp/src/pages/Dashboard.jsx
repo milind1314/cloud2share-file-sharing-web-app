@@ -1,10 +1,23 @@
-import {UserButton} from "@clerk/clerk-react";
+import DashboardLayout from "../layout/DashboardLayout.jsx";
+import {useAuth} from "@clerk/clerk-react";
+import {useEffect} from "react";
 
 const Dashboard = () => {
+
+    const {getToken} = useAuth();
+    useEffect(() => {
+        const displayToken = async () => {
+            const token = await getToken();
+            console.log(token);
+        }
+        displayToken();
+    }, []);
     return (
-        <div>
-            <UserButton />
-        </div>
+        <DashboardLayout activeMenu="Dashboard">
+            <div>
+                Dashbord content
+            </div>
+        </DashboardLayout>
     )
 }
 

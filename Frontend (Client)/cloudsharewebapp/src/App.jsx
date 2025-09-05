@@ -32,7 +32,7 @@ const App = () => {
                         <SignedOut><RedirectToSignIn /></SignedOut>
                     </>
                 } />
-                <Route path="/subscription" element={
+                <Route path="/subscriptions" element={
                     <>
                         <SignedIn><Subscription /></SignedIn>
                         <SignedOut><RedirectToSignIn /></SignedOut>

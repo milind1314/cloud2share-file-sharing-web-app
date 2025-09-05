@@ -1,6 +1,11 @@
+import DashboardLayout from "../layout/DashboardLayout.jsx";
+
 const Upload = () => {
     return (
-        <div>Upload</div>
+        <DashboardLayout activeMenu="Upload" >
+            <div>Upload</div>
+
+        </DashboardLayout>
     )
 }
 export default Upload

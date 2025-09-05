@@ -1,4 +1,6 @@
 // 🌟 Features Section
+import {CreditCard, FileText, FolderOpen, LayoutDashboard, Upload} from "lucide-react";
+
 export const features = [
     {
         id: 1,
@@ -126,5 +128,40 @@ export const testimonials = [
         quote:
             "The enterprise plan gave us seamless collaboration and world-class support. Highly recommend it!",
         rating: 5,
+    },
+];
+
+
+//Side menu bar options
+export const SIDE_MENU_DATA = [
+    {
+        id: "01",
+        label: "Dashboard",
+        icon: LayoutDashboard,
+        path: "/dashboard",
+    },
+    {
+        id: "02",
+        label: "Upload",
+        icon: Upload,
+        path: "/upload",
+    },
+    {
+        id: "03",
+        label: "My Files",
+        icon: FolderOpen,
+        path: "/my-files",
+    },
+    {
+        id: "04",
+        label: "Subscriptions",
+        icon: CreditCard,
+        path: "/subscriptions",
+    },
+    {
+        id: "05",
+        label: "Transactions",
+        icon: FileText,
+        path: "/transactions",
     },
 ];
