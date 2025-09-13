@@ -20,7 +20,7 @@ public class ProfileService {
         if (profileRepo.existsByClerkId(profileDTO.getClerkId())) {
             return updateProfile(profileDTO);
         }
-        
+
         ProfileDocument profile = ProfileDocument.builder()
                 .clerkId(profileDTO.getClerkId())
                 .email(profileDTO.getEmail())
@@ -88,7 +88,7 @@ public class ProfileService {
         return profileRepo.existsByClerkId(clerkId);
     }
 
-    public void deleteProfile(String clerkId){
+    public void deleteProfile(String clerkId) {
         ProfileDocument existingProfile = profileRepo.findByClerkId(clerkId);
 
         if (existingProfile != null) {
@@ -96,7 +96,7 @@ public class ProfileService {
         }
     }
 
-    public ProfileDocument getCurrentProfile(){
+    public ProfileDocument getCurrentProfile() {
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             throw new UsernameNotFoundException("User not authenticated");
         }
