@@ -23,6 +23,7 @@ import {Link, useNavigate} from "react-router-dom";
 import FileCard from "../components/FileCard.jsx";
 import {apiEndpoints} from "../util/apiEndpoints.js";
 import ConfirmationDialog from "../components/ConformationDialog.jsx";
+import LinkShareModal from "../components/LinkShareModal.jsx";
 
 
 const MyFiles = () => {
@@ -36,7 +37,7 @@ const MyFiles = () => {
         fileId: null,
     });
 
-    const [ShareModal,setShareModal] = useState({
+    const [shareModal,setShareModal] = useState({
         isOpen: false,
         fileId: null,
         link: ""
@@ -92,6 +93,25 @@ const MyFiles = () => {
         setDeleteConfirmation({
             isOpen: true,
             fileId
+        })
+    }
+
+    //opens the share link modal
+    const openShareModal = (fileId) => {
+        const link = `${window.location.origin}/file/${fileId}`;
+        setShareModal({
+            isOpen: true,
+            fileId,
+            link
+        });
+    }
+
+    //close the share link modal
+    const closeShareModal = () => {
+        setShareModal({
+            isOpen: false,
+            fileId: null,
+            link: ""
         })
     }
 
@@ -207,7 +227,14 @@ const MyFiles = () => {
                     // <FileCard file={file} />
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {files.map((file) => (
-                            <FileCard file={file} key={file.id} />
+                            <FileCard
+                                file={file}
+                                key={file.id}
+                                onDelete={openDeleteConformation}
+                                onTogglePublic={togglePublic}
+                                onDownload={handleDownload}
+                                onShareLink={openShareModal}
+                            />
                         ))}
                     </div>
                 ) : (
@@ -259,7 +286,9 @@ const MyFiles = () => {
                                                 )}
                                             </button>
                                             {file.isPublic && (
-                                                <button className="flex items-center gap-2 cursor-pointer group text-blue-600">
+                                                <button
+                                                    onClick={() => openShareModal(file.id)}
+                                                    className="flex items-center gap-2 cursor-pointer group text-blue-600">
                                                     <Copy size={16} />
                                                     <span className="group-hover:underline">
                                                         Share Link
@@ -315,6 +344,15 @@ const MyFiles = () => {
                     cancelText="Cancel"
                     onConfirm={handleDelete}
                     confirmButtonClass="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                />
+
+                {/* Share link modal */}
+
+                <LinkShareModal
+                    isOpen={shareModal.isOpen}
+                    onClose={closeShareModal}
+                    link={shareModal.link}
+                    title="Share File"
                 />
             </div>
         </DashboardLayout>
