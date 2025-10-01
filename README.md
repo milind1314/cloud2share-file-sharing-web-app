@@ -1,7 +1,7 @@
 
 # Cloud2Share - File Sharing Web App  
 
-**A cloud-based file sharing web app built with Spring Boot, React, Tailwind CSS, MongoDB, and Clerk.**  
+**A cloud-based file sharing web app built with Spring Boot, React, Tailwind CSS, MongoDB, ngrok and Clerk.**  
 
 ---
 
@@ -103,4 +103,5 @@ Feel free to fork this repo and submit a pull request.
 This project is licensed under the **MIT License**.
 
 ---
+
 
